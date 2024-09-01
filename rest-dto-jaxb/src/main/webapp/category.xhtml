@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+    <title>Kategorien verwalten</title>
+</h:head>
+<h:body>
+    <h:form id="categoryForm">
+        <p:panel header="Kategorien">
+            <p:dataTable var="category" value="#{categoryBean.categories}" selectionMode="single"
+                         selection="#{categoryBean.selectedCategory}" rowKey="#{category.id}">
+                         
+                         <p:ajax event="rowSelect" update=":categoryForm:editCategoryDialog" />
+                <p:column headerText="ID">
+                    <h:outputText value="#{category.id}"/>
+                </p:column>
+                <p:column headerText="Name">
+                    <h:outputText value="#{category.name}"/>
+                </p:column>
+                <p:column headerText="Description">
+                    <h:outputText value="#{category.description}"/>
+                </p:column>
+                <f:facet name="footer">
+                    <p:commandButton value="Neue Kategorie" update=":categoryForm" 
+                                     oncomplete="PF('newCategoryDialog').show()" 
+                                     actionListener="#{categoryBean.setNewCategory(null)}"/>
+                    <!-- Edit Button -->
+                    <p:commandButton value="Edit Category" 
+                                     oncomplete="PF('editCategoryDialog').show()"                                   
+                                     update=":categoryForm:editCategoryPanel"/>
+                                     
+                    <p:commandButton value="Entfernen" 
+                         actionListener="#{categoryBean.deleteCategory(categoryBean.selectedCategory.id)}" 
+                         process="@this"	
+                         update=":categoryForm"/>
+                </f:facet>
+            </p:dataTable>
+        </p:panel>
+
+        <p:dialog id="editCategoryDialog" header="Kategorie bearbeiten" widgetVar="editCategoryDialog" modal="true" height="200">
+            <h:panelGrid id="editCategoryPanel" columns="2">
+                <h:outputLabel for="editName" value="Name:"/>
+                <!-- <p:inputText id="editName" value="#{categoryBean.selectedCategory.name}" required="true"> -->
+                <p:inputText id="editName" value="#{categoryBean.selectedCategory != null ? categoryBean.selectedCategory.name : ''}" required="true">
+                <p:ajax event="blur" update="editName" />
+                </p:inputText>
+                <h:outputLabel for="editDescription" value="Description:"/>
+                <p:inputTextarea id="editDescription" value="#{categoryBean.selectedCategory != null ? categoryBean.selectedCategory.description : ''}" required="true">
+                <p:ajax event="blur" update="editDescription" />
+                </p:inputTextarea>
+                <p:commandButton value="Speichern" update=":categoryForm" 
+                                 oncomplete="PF('editCategoryDialog').hide()" 
+                                 actionListener="#{categoryBean.updateCategory()}" process="@this"/>
+            </h:panelGrid>
+        </p:dialog>
+
+        <p:dialog header="Neue Kategorie" widgetVar="newCategoryDialog" modal="true" height="200">
+            <h:panelGrid columns="2">
+                <h:outputLabel for="newName" value="Name:"/>
+                <p:inputText id="newName" value="#{categoryBean.newCategory.name}" required="true">
+                <p:ajax event="blur" update="newName" />
+                </p:inputText>
+                <h:outputLabel for="newDescription" value="Description:"/>
+                <p:inputTextarea id="newDescription" value="#{categoryBean.newCategory.description}" required="true">
+                <p:ajax event="blur" update="newDescription" />
+                </p:inputTextarea>
+                <p:commandButton value="Erstellen" update=":categoryForm" 
+                                 oncomplete="PF('newCategoryDialog').hide()" 
+                                 actionListener="#{categoryBean.createCategory()}" process="@this"/>
+            </h:panelGrid>
+        </p:dialog>
+    </h:form>
+</h:body>
+</html>
