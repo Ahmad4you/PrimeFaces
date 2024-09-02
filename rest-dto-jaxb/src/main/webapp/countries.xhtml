@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+    <title>Länder verwalten</title>
+</h:head>
+<h:body>
+    <h:form id="countryForm">
+        <p:panel header="Länder">
+            <p:dataTable id="countryTable" var="country" value="#{countryBean.countries}" 
+                         selectionMode="single" selection="#{countryBean.selectedCountry}" rowKey="#{country.id}"
+                         editable="true" editMode="row" style="width:100%">
+                         
+                         <p:ajax event="rowSelect" update=":countryForm:editCountryDialog" />
+                         
+                 <p:ajax event="rowEdit" listener="#{countryBean.onRowEdit}" update=":countryForm:messages" />
+                 <p:ajax event="rowEditCancel" listener="#{countryBean.onRowEditCancel}" update=":countryForm:messages" />
+            
+            <p:column headerText="ID">
+                <h:outputText value="#{country.id}"/>
+            </p:column>
+
+            <p:column headerText="Name">
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{country.name}" /></f:facet>
+                    <f:facet name="input"><p:inputText value="#{country.name}" /></f:facet>
+                </p:cellEditor>
+            </p:column>
+
+            <p:column headerText="ISO Code">
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{country.isoCode}" /></f:facet>
+                    <f:facet name="input"><p:inputText value="#{country.isoCode}" /></f:facet>
+                </p:cellEditor>
+            </p:column>
+
+            <p:column headerText="Printable Name">
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{country.printableName}" /></f:facet>
+                    <f:facet name="input"><p:inputText value="#{country.printableName}" /></f:facet>
+                </p:cellEditor>
+            </p:column>
+
+            <p:column headerText="ISO3">
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{country.iso3}" /></f:facet>
+                    <f:facet name="input"><p:inputText value="#{country.iso3}" /></f:facet>
+                </p:cellEditor>
+            </p:column>
+
+            <p:column headerText="Numcode">
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{country.numcode}" /></f:facet>
+                    <f:facet name="input"><p:inputText value="#{country.numcode}" /></f:facet>
+                </p:cellEditor>
+            </p:column>
+
+            <!-- Aktionenspalte zum Speichern oder Abbrechen -->
+            <p:column style="width:32px">
+                <p:rowEditor />
+            </p:column>
+        </p:dataTable>
+		
+		<p:growl id="messages" showDetail="true" />
+        <!-- Button zum Hinzufügen eines neuen Landes -->
+             <p:commandButton id="addEmptyCountryBtn" value="Leere Zeile hinzufügen" process="@this"
+                 actionListener="#{countryBean.addEmptyCountryRow}" update=":countryForm:countryTable"
+                 icon="pi pi-plus" style="margin-top:10px" />
+
+
+            <!-- Kontextmenü für die Tabelle -->
+            <p:contextMenu for="countryTable" widgetVar="countryContextMenu">
+                <p:menuitem value="Neues Land" icon="pi pi-plus" 
+                            oncomplete="PF('newCountryDialog').show()" update=":countryForm:newCountryDialog" />
+                <p:menuitem value="Editieren" icon="pi pi-pencil" 
+                            oncomplete="PF('editCountryDialog').show()" process="@this" update=":countryForm:editCountryPanel"/>
+                <p:menuitem value="Löschen" icon="pi pi-trash" 
+                            actionListener="#{countryBean.deleteCountry()}" update=":countryForm" />
+            </p:contextMenu>
+        </p:panel>
+
+        <!-- Dialog für ein neues Land -->
+        <p:dialog id="newCountryDialog" header="Neues Land" widgetVar="newCountryDialog" modal="true" height="200">
+            <h:panelGrid columns="2">
+                <h:outputLabel for="newName" value="Name:"/>
+                <p:inputText id="newName" value="#{countryBean.newCountry.name}" required="true">
+                 <p:ajax event="blur" update="newName" />
+                </p:inputText>
+                <h:outputLabel for="newIsoCode" value="ISO Code:"/>
+                <p:inputText id="newIsoCode" value="#{countryBean.newCountry.isoCode}" required="true">
+                 <p:ajax event="blur" update="newIsoCode" />
+                </p:inputText>
+                <h:outputLabel for="newPrintableName" value="Printable Name:"/>
+                <p:inputText id="newPrintableName" value="#{countryBean.newCountry.printableName}" required="true">
+                 <p:ajax event="blur" update="newPrintableName" />
+                </p:inputText>
+                <h:outputLabel for="newIso3" value="ISO3:"/>
+                <p:inputText id="newIso3" value="#{countryBean.newCountry.iso3}" required="true">
+                 <p:ajax event="blur" update="newIso3" />
+                </p:inputText>
+                <h:outputLabel for="newNumcode" value="Numcode:"/>
+                <p:inputText id="newNumcode" value="#{countryBean.newCountry.numcode}" required="true">
+                 <p:ajax event="blur" update="newNumcode" />
+                </p:inputText>
+                <p:commandButton value="Erstellen" update=":countryForm" 
+                                 oncomplete="PF('newCountryDialog').hide()" 
+                                 actionListener="#{countryBean.createCountry()}" process="@this"/>
+                
+            </h:panelGrid>
+        </p:dialog>
+
+        <!-- Dialog zum Bearbeiten eines Landes -->
+        <p:dialog id="editCountryDialog" header="Land bearbeiten" widgetVar="editCountryDialog" modal="true" height="200">
+            <h:panelGrid id="editCountryPanel" columns="2">
+                <h:outputLabel for="editName" value="Name:"/>
+                <p:inputText id="editName" value="#{countryBean.selectedCountry != null ? countryBean.selectedCountry.name : ''}" required="true">
+                 <p:ajax event="blur" update="editName" />
+                </p:inputText>
+                <h:outputLabel for="editIsoCode" value="ISO Code:"/>
+                <p:inputText id="editIsoCode" value="#{countryBean.selectedCountry != null ? countryBean.selectedCountry.isoCode : ''}" required="true">
+                 <p:ajax event="blur" update="editIsoCode" />
+                </p:inputText>
+                <h:outputLabel for="editPrintableName" value="Printable Name:"/>
+                <p:inputText id="editPrintableName" value="#{countryBean.selectedCountry != null ? countryBean.selectedCountry.printableName : ''}" required="true">
+                 <p:ajax event="blur" update="editPrintableName" />
+                </p:inputText>
+                <h:outputLabel for="editIso3" value="ISO3:"/>
+                <p:inputText id="editIso3" value="#{countryBean.selectedCountry != null ? countryBean.selectedCountry.iso3 : ''}" required="true">
+                 <p:ajax event="blur" update="editIso3" />
+                </p:inputText>
+                <h:outputLabel for="editNumcode" value="Numcode:"/>
+                <p:inputText id="editNumcode" value="#{countryBean.selectedCountry != null ? countryBean.selectedCountry.numcode : ''}" required="true">
+                 <p:ajax event="blur" update="editNumcode" />
+                </p:inputText>
+                <p:commandButton value="Speichern" update=":countryForm" 
+                                 oncomplete="PF('editCountryDialog').hide()" 
+                                 actionListener="#{countryBean.updateCountry()}" process="@this"/>
+            </h:panelGrid>
+        </p:dialog>
+
+    </h:form>
+</h:body>
+</html>

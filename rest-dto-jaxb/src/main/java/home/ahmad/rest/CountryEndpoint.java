@@ -14,6 +14,7 @@ import jakarta.ws.rs.core.Response.Status;
 import jakarta.ws.rs.core.UriBuilder;
 
 /**
+ * http://localhost:8080/jakartaee/api/countrys
  * 
  * @author Ahmad Alrefai
  */

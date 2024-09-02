@@ -43,6 +43,17 @@ public class CountryDTO implements Serializable {
 		entity = em.merge(entity);
 		return entity;
 	}
+	
+	public Country toEntity() {
+	    Country entity = new Country();
+	    entity.setIsoCode(this.getIsoCode());
+	    entity.setName(this.getName());
+	    entity.setPrintableName(this.getPrintableName());
+	    entity.setIso3(this.getIso3());
+	    entity.setNumcode(this.getNumcode());
+	    return entity;
+	}
+
 
 	public Long getId() {
 		return this.id;
