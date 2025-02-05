@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>Artikelverwaltung</title>
+	<style>
+.artikel {
+	
+}
+
+.ungerade {
+	background-color: #EEE;
+}
+
+.gerade {
+	background-color: #FFF;
+}
+
+td img {
+	min-height: 100px;
+	min-width: 100px;
+	max-width: 300px;
+	max-height: 300px;
+}
+</style>
+</h:head>
+<h:body>
+	<h2>meine Atrikelverwaltung</h2>
+
+	<p:dataTable value="#{simpleBean.artikelList}" var="artikel"
+		styleClass="artikel" rowClasses="ungerade, gerade">
+		<f:facet name="header">Sortimment Tabelle</f:facet>
+		<p:column sortBy="#{artikel.id}">
+			<f:facet name="header">Nr</f:facet>
+			<h:outputText value="#{artikel.id}" />
+		</p:column>
+		<p:column sortBy="#{artikel.name}">
+			<f:facet name="header">Name</f:facet>
+			<h:outputText value="#{artikel.name}" />
+		</p:column>
+		<p:column sortBy="#{artikel.description}">
+			<f:facet name="header">Description</f:facet>
+			<h:outputText value="#{artikel.description}" />
+		</p:column>
+
+		<p:column>
+			<f:facet name="header">Calender</f:facet>
+			<p:calendar />
+		</p:column>
+		<p:column>
+			<h:form>
+				<f:facet name="header">X</f:facet>
+				<h:commandLink action="#{simpleBean.remove(artikel)}">
+					<img src="img/anchor.svg" />
+				</h:commandLink>
+			</h:form>
+		</p:column>
+
+
+	</p:dataTable>
+
+	<p id="fussnote">
+		Bitte beachten Sie: <br /> Diese Seite ist nur ein Entwurf!
+	</p>
+</h:body>
+</html>
+

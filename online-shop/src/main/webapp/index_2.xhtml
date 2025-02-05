@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<link rel="stylesheet" type="text/css" media="screen" href="css/style.css"/>
+	<title>Artikelverwaltung</title>
+</h:head>
+<h:body>
+   <p><img id="kopf_links" src="img/logo.jpg" width="350" alt="Logo"/></p>
+   <h2> meine Atrikelverwaltung</h2>
+	<h:outputText value="#{simpleBean.name}"></h:outputText>
+
+	<h:dataTable value="#{simpleBean.artikelList}" var="artikel" styleClass="artikel" rowClasses="ungerade, gerade">
+		<h:column>
+			<f:facet name="header">Nr</f:facet>
+			<h:outputText value="#{artikel.id}" />
+		</h:column>
+		<h:column>
+			<f:facet name="header">Name</f:facet>
+			<h:outputText value="#{artikel.name}" />
+		</h:column>
+		<h:column>
+			<f:facet name="header">Description</f:facet>
+			<h:outputText value="#{artikel.description}" />
+		</h:column>
+		
+		<h:column>
+			<f:facet name="header">Image</f:facet>
+			<h:graphicImage url="#{artikel.bild}"></h:graphicImage>
+		</h:column>
+		<h:column>
+			<h:form>
+			<h:commandLink action="#{simpleBean.remove(artikel)}">
+				<img src="img/anchor.svg"/>
+			</h:commandLink>
+		</h:form>
+		</h:column>
+		
+
+	</h:dataTable>
+	
+	<p id="fussnote">Bitte beachten Sie: <br /> Diese Seite ist nur ein Entwurf!</p>
+</h:body>
+</html>
+

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Client-side Validation</title>
+    <!-- <h:outputScript name="js/validation.js" /> -->
+</h:head>
+<h:body>
+    <h:form id="myForm" onsubmit="return validateForm()">
+        <h:panelGrid columns="3">
+            <h:outputLabel for="name" value="Name:" />
+            <h:inputText id="name" value="#{userBean.name}" required="true" />
+            <h:message for="name" />
+
+            <h:outputLabel for="email" value="E-Mail:" />
+            <h:inputText id="email" value="#{userBean.email}" required="true" />
+            <h:message for="email" />
+
+            <h:outputLabel for="age" value="Alter:" />
+            <h:inputText id="age" value="#{userBean.age}" required="true" />
+            <h:message for="age" />
+        </h:panelGrid>
+
+        <h:commandButton value="Absenden" action="#{userBean.submit}" />
+    </h:form>
+    <script src="js/validation.js"/>
+</h:body>
+</html>

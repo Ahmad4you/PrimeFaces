@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	    <title>Artikel und Bewertungen Formular</title>
+     
+</h:head>
+
+<h:body>
+	<p:growl id="messages"/>
+	
+	<h:form id="artikelForm">
+    <p:panel header="Artikel Eingeben" style="width: 50%;">
+        <p:messages id="messages" autoUpdate="true" />
+
+        <p:outputLabel for="name" value="Name:" />
+        <p:inputText id="name" value="#{artikelController.artikelEingabe.name}" required="true" />
+
+        <p:outputLabel for="description" value="Beschreibung:" />
+        <p:inputTextarea id="description" value="#{artikelController.artikelEingabe.description}" rows="3" />
+
+        <p:outputLabel for="bild" value="Bild URL:" />
+        <p:inputText id="bild" value="#{artikelController.artikelEingabe.bild}" />
+
+        <p:outputLabel for="verfuegbarAb" value="Verfügbar ab:" />
+        <p:calendar id="verfuegbarAb" value="#{artikelController.artikelEingabe.verfuegbarAb}" showButtonPanel="true" />
+
+        <p:commandButton value="Artikel Speichern" action="#{artikelController.saveArtikel}" update=":messages" 
+        oncomplete="refreshArtikelList();"/>
+        
+         <!-- Remote Command zum Aktualisieren der Artikelliste -->
+       <p:remoteCommand name="refreshArtikelList" 
+                        action="#{artikelController.loadArtikelList}" 
+                        update="mainForm:artikel" />
+                 
+    </p:panel>
+	</h:form>
+	
+    <h:form id="mainForm">
+    <p:separator />
+    <p:panel header="Bewertung Hinzufügen" style="width: 50%;">
+        <p:outputLabel for="artikel" value="Artikel auswählen:" />
+        <p:selectOneMenu id="artikel" value="#{bewertungController.artikelId}" binding="#{bewertungController.selectMenu}" styleClass="artikel-select">
+            <f:selectItems value="#{artikelController.artikelList}" var="artikel" 
+                           itemValue="#{artikel.id}" itemLabel="#{artikel.name}" />
+                           
+            <p:ajax event="change" listener="#{bewertungController.onArtikelChange}" update="bewertungForm" />               
+        </p:selectOneMenu>
+    </p:panel>    
+    <p:separator />
+	
+	 <p:panel id="bewertungForm">
+    <p:outputLabel for="bewertungKommentar" value="Kommentar:" />
+    <p:inputTextarea id="bewertungKommentar" value="#{bewertungController.bewertung.kommentar}" />
+    <br />
+    <p:outputLabel value="Bewertung:" />
+    <p:selectOneRadio value="#{bewertungController.bewertung.sterne}">
+        <f:selectItem itemLabel="1 Stern" itemValue="1" />
+        <f:selectItem itemLabel="2 Sterne" itemValue="2" />
+        <f:selectItem itemLabel="3 Sterne" itemValue="3" />
+        <f:selectItem itemLabel="4 Sterne" itemValue="4" />
+        <f:selectItem itemLabel="5 Sterne" itemValue="5" />
+    </p:selectOneRadio>
+    <br />
+    <p:commandButton value="Bewertung speichern" action="#{bewertungController.saveBewertung}" disabled="#{bewertungController.artikelId == null}"
+    update=":messages" />
+    </p:panel>
+
+	<h:outputText value="Bewertungen"/>
+	<hr />
+	<h:panelGrid columns="1">
+	<ui:repeat value="#{bewertungController.bewertungList}" var="bewertung">
+	<div>
+		<h:outputText value="#{bewertung.sterne} Sterne(e) "/>
+		<h:outputText value="#{bewertung.kommentar}   "/>
+		
+		<p:commandButton value="Entfernen" action="#{bewertungController.entferneBewertung(bewertung)}" 
+                             update=":mainForm :messages" />
+		<hr />
+	</div>
+	</ui:repeat>
+	</h:panelGrid>
+	
+    </h:form>
+	
+</h:body>
+</html>
