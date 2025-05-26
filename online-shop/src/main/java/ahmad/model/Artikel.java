@@ -1,4 +1,4 @@
-package ahmad.hodel;
+package ahmad.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;

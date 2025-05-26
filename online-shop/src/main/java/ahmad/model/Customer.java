@@ -1,4 +1,4 @@
-package ahmad.hodel;
+package ahmad.model;
 import jakarta.persistence.Entity;
 
 @Entity

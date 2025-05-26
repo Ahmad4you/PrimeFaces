@@ -53,9 +53,7 @@
         </p:calendar>
         <h:outputLabel value="Bild: " for="bild"/>
         <h:graphicImage class="bild" id="bild" url="#{artikelController.artikel.bild}" />
-        <h:commandLink value="zurück" action="#{artikelController.zurueck}"
-                             rendered="#{artikelController.index > 0}"/><h:outputText rendered="#{artikelController.index == 0}" value=" "/>
-        <h:commandLink value="vor" action="#{artikelController.vor}" />
+        
       </h:panelGrid>
     </h:form>
     <p id="fussnote">Bitte beachten Sie: <br /> Diese Seite ist nur ein Entwurf!</p>

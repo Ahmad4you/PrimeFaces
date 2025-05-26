@@ -10,4 +10,5 @@
 		<exception-type>jakarta.faces.application.ViewExpiredException</exception-type>
 		<location>/login.xhtml</location>
 	</error-page>
+	
 </web-app>

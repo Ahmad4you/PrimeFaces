@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import ahmad.hodel.Artikel;
+import ahmad.model.Artikel;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 

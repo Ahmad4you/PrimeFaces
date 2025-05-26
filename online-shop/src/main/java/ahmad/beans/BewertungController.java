@@ -4,8 +4,8 @@ package ahmad.beans;
 import java.io.Serializable;
 import java.util.List;
 
-import ahmad.hodel.Artikel;
-import ahmad.hodel.Bewertung;
+import ahmad.model.Artikel;
+import ahmad.model.Bewertung;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
