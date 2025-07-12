@@ -7,6 +7,10 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * 
+ * @author Ahmad Alrefai
+ */
 @Named
 @SessionScoped
 public class ObstBean implements Serializable{
