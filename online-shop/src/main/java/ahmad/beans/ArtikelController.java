@@ -131,7 +131,7 @@ public class ArtikelController implements Serializable {
             if (index > 0) {
                 index--;
                 this.artikel = shop.getSortiment().get(index); // Aktuellen Artikel aktualisieren
-            }
+            } 
         }
 	}
 

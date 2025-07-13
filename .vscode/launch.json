@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-DentistAppDevelopApplication<dentist-app-develop>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.dentistapp.dentistappdevelop.DentistAppDevelopApplication",
+            "projectName": "dentist-app-develop",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

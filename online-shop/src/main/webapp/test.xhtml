@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta charset="UTF-8" />
+    <title>RequestScoped Beispiel (JSF)</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .bean-info { background-color: #f0f0f0; border: 1px solid #ccc; padding: 15px; margin-bottom: 10px; }
+        .highlight { color: blue; font-weight: bold; }
+    </style>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+    
+</h:head>
+<h:body>
+    <h1>@RequestScoped Bean Beispiel (JSF)</h1>
+
+    <div class="bean-info">
+        <p><strong>Nachricht von der Bean:</strong> <span class="highlight">#{anfrageCounterBean.message}</span></p>
+        <p><strong>Instanz-ID dieser Bean:</strong> <span class="highlight">#{anfrageCounterBean.beanInstanceId}</span></p>
+        <p><strong>Gesamtanzahl der erstellten Bean-Instanzen (seit Serverstart):</strong> <span class="highlight">#{anfrageCounterBean.totalInstanceCount}</span></p>
+    </div>
+
+    <p>Aktualisiere diese Seite (oder rufe sie erneut auf), um eine neue HTTP-Anfrage zu senden.</p>
+    <p>Beachte die <span class="highlight">Instanz-ID</span> und den <span class="highlight">Gesamtzähler</span>. Jede Anfrage sollte eine neue Instanz-ID haben.</p>
+
+    <h:link value="Seite neu laden" outcome="index" />
+    
+    </h:body>
+</html>

@@ -1,0 +1,8 @@
+<flow-definition id="registration">
+    <flow-return id="returnFromRegistrationFlow">
+        <from-outcome>#{registrationBean.returnValue}</from-outcome>
+    </flow-return>
+    <view id="registration">
+        <vdl-document>/registration/registration.xhtml</vdl-document>
+    </view>
+</flow-definition>
